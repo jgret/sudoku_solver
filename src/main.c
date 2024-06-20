@@ -39,15 +39,12 @@ int main() {
 
         // user number input
         char ch = GetCharPressed();
-        if (ch != 0) {
+        if (ch >= '1' && ch <= '9') {
+            Cell sel = get_selected_cell();
 
-            if (ch >= '1' && ch <= '9') {
-                Cell sel = get_selected_cell();
-
-                if (!sudoku_is_cell_fixed(&sudoku, sel)) {
-                    if (sel.row >= 0 && sel.col >= 0)
-                        sudoku.nums[sel.row][sel.col] = ch - '0';
-                }
+            if (!sudoku_is_cell_fixed(&sudoku, sel)) {
+                if (cell_valid(sel))
+                    sudoku.nums[sel.row][sel.col] = ch - '0';
             }
         }
 

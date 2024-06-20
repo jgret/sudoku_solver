@@ -60,15 +60,15 @@ void render_sudoku(Sudoku *sudoku)
     float cell_w = (float) screen_w / 9.0f;
     float cell_h = (float) screen_h / 9.0f;
 
-    if (hovered_cell.row > -1 && hovered_cell.col > -1) {
+    if (cell_valid(hovered_cell)) {
         DrawRectangle(cell_w * hovered_cell.row, cell_h * hovered_cell.col, cell_w, cell_h, YELLOW);
     }
 
-    if (selected_cell.row > -1 && selected_cell.col > -1) {
+    if (cell_valid(selected_cell)) {
         DrawRectangle(cell_w * selected_cell.row, cell_h * selected_cell.col, cell_w, cell_h, BLUE);
     }
 
-    if (error_cell.row > -1 && error_cell.col > -1) {
+    if (cell_valid(error_cell)) {
         DrawRectangle(cell_w * error_cell.row, cell_h * error_cell.col, cell_w, cell_h, RED);
     }
 

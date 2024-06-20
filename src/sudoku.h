@@ -16,6 +16,8 @@ typedef struct {
     int col;
 } Cell;
 
+bool cell_valid(Cell cell);
+
 void sudoku_init(Sudoku *s);
 
 void sudoku_clear(Sudoku *s);

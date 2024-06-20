@@ -3,6 +3,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+bool cell_valid(Cell cell)
+{
+    return cell.row >= 0 && cell.col >= 0 && cell.row < 9 && cell.col < 9;
+}
+
 void sudoku_init(Sudoku *s)
 {
     sudoku_clear(s);
