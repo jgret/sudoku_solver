@@ -3,6 +3,7 @@
 
 static Cell selected_cell = {-1, -1};
 static Cell hovered_cell = {-1, -1};
+static Cell error_cell = {-1, -1};
 static Font font;
 
 void render_init()
@@ -20,6 +21,11 @@ void set_selected_cell(Cell cell)
 {
     selected_cell = cell;
 }
+
+void set_error_cell(Cell cell) 
+{
+    error_cell = cell;
+} 
 
 Cell get_cell_by_mouse(Vector2 pos) {
 
@@ -41,6 +47,11 @@ Cell get_hovered_cell()
     return hovered_cell;
 }
 
+Cell get_error_cell() 
+{
+    return error_cell;
+}
+
 void render_sudoku(Sudoku *sudoku) 
 {
 
@@ -49,12 +60,16 @@ void render_sudoku(Sudoku *sudoku)
     float cell_w = (float) screen_w / 9.0f;
     float cell_h = (float) screen_h / 9.0f;
 
-    if (selected_cell.row > -1 && selected_cell.col > -1) {
-        DrawRectangle(cell_w * selected_cell.row, cell_h * selected_cell.col, cell_w, cell_h, RED);
+    if (hovered_cell.row > -1 && hovered_cell.col > -1) {
+        DrawRectangle(cell_w * hovered_cell.row, cell_h * hovered_cell.col, cell_w, cell_h, YELLOW);
     }
 
-    if (hovered_cell.row > -1 && hovered_cell.col > -1) {
-        DrawRectangle(cell_w * hovered_cell.row, cell_h * hovered_cell.col, cell_w, cell_h, BLUE);
+    if (selected_cell.row > -1 && selected_cell.col > -1) {
+        DrawRectangle(cell_w * selected_cell.row, cell_h * selected_cell.col, cell_w, cell_h, BLUE);
+    }
+
+    if (error_cell.row > -1 && error_cell.col > -1) {
+        DrawRectangle(cell_w * error_cell.row, cell_h * error_cell.col, cell_w, cell_h, RED);
     }
 
     for (int i = 0; i <= 9; i++) {
@@ -71,7 +86,7 @@ void render_sudoku(Sudoku *sudoku)
         for (int cols = 0; cols < 9; cols++) {
             int num = sudoku->nums[rows][cols];
            
-            char* text = TextFormat("%i", num);
+            const char* text = TextFormat("%i", num);
             int fontsize = 30;
             Vector2 dim = MeasureTextEx(font, text, fontsize, 0);
 

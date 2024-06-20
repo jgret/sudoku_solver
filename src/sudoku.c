@@ -3,11 +3,35 @@
 #include <string.h>
 #include <stdlib.h>
 
-void sudoku_clear(Sudoku* s) {
+void sudoku_init(Sudoku *s)
+{
+    sudoku_clear(s);
+}
+
+void sudoku_clear(Sudoku *s)
+{
     for (int i = 0; i  < 9; i++){
         for (int j = 0; j < 9; j++) {
             s->nums[i][j] = 0;
         }
+    }
+
+    for (int i = 0; i < 9; i++) {
+        s->fixed[i] = 0;
+    }
+}
+
+bool sudoku_is_cell_fixed(Sudoku *s, Cell cell)
+{
+    return s->fixed[cell.row] & (1<<cell.col);
+}
+
+void sudoku_set_cell_fixed(Sudoku *s, Cell cell, bool fixed)
+{
+    if (fixed) {
+        s->fixed[cell.row] |= (1<<cell.col);
+    } else {
+        s->fixed[cell.row] &= ~(1<<cell.col);
     }
 }
 
@@ -66,7 +90,11 @@ int load_oneline(Sudoku *s, char * filepath) {
             if (ch >= '1' && ch <= '9')
                 num = ch - '0';
 
-            s->nums[idx / 9][idx % 9] = num;
+            int row = idx / 9;
+            int col = idx % 9;
+
+            s->nums[row][col] = num;
+            sudoku_set_cell_fixed(s, (Cell){row, col}, num != 0);
 
             idx++;
 

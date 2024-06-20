@@ -2,11 +2,13 @@
 #define SUDOKU_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef struct {
 
-    uint8_t nums[9][9];
-    
+    uint8_t nums[9][9];     // stores the sudoku grid
+    uint16_t fixed[9];      // bit flag variables for modifiable gird cells (one element == one row)    
+
 } Sudoku;
 
 typedef struct {
@@ -14,8 +16,14 @@ typedef struct {
     int col;
 } Cell;
 
-void sudoku_clear(Sudoku* s);
+void sudoku_init(Sudoku *s);
 
-int sudoku_load(Sudoku* s, char* filepath);
+void sudoku_clear(Sudoku *s);
+
+bool sudoku_is_cell_fixed(Sudoku *s, Cell cell);
+
+void sudoku_set_cell_fixed(Sudoku *s, Cell cell, bool fixed);
+
+int sudoku_load(Sudoku *s, char* filepath);
 
 #endif

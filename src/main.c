@@ -4,7 +4,6 @@
 #include "sudoku.h"
 #include "solver.h"
 
-
 int main() {
 
     InitWindow(500, 500, "Sudoku");
@@ -14,6 +13,7 @@ int main() {
 
 
     Sudoku sudoku;
+    sudoku_init(&sudoku);
     if (sudoku_load(&sudoku, "../data/sudoku.txt") != 0) {
         printf("Failed to load sudoku\n");
         return -1;
@@ -27,7 +27,7 @@ int main() {
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
             Vector2 pos = GetMousePosition();
-            // set_selected_cell(get_cell_by_mouse(pos));
+            set_selected_cell(get_cell_by_mouse(pos));
         }
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) || IsKeyPressed(KEY_DELETE) || IsKeyPressed(KEY_BACKSPACE)) {
@@ -41,16 +41,22 @@ int main() {
         char ch = GetCharPressed();
         if (ch != 0) {
 
-            if (ch >= '1' && ch <= '7') {
+            if (ch >= '1' && ch <= '9') {
                 Cell sel = get_selected_cell();
-                if (sel.row >= 0 && sel.col >= 0)
-                    sudoku.nums[sel.row][sel.col] = ch - '0';
+
+                if (!sudoku_is_cell_fixed(&sudoku, sel)) {
+                    if (sel.row >= 0 && sel.col >= 0)
+                        sudoku.nums[sel.row][sel.col] = ch - '0';
+                }
             }
         }
 
         Cell first_err = {-1, -1};
         SudokuErr ret = solver_check_sudoku(&sudoku, &first_err);
-        set_selected_cell(first_err);
+        if (ret != SUDOKU_VALID)
+            set_error_cell(first_err);
+        else
+            set_error_cell((Cell){-1, -1});
 
         BeginDrawing();
 

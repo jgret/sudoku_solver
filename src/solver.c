@@ -50,6 +50,8 @@ SudokuErr solver_check_cell(Sudoku *s, Cell cell)
 
     int off_col = cell.col / 3;
     int off_row = cell.row / 3;
+    off_col *= 3;
+    off_row *= 3;
 
     for (int i = 0; i < 9; i++) 
     {
