@@ -28,6 +28,8 @@ bool sudoku_is_cell_fixed(Sudoku *s, Cell cell);
 
 void sudoku_set_cell_fixed(Sudoku *s, Cell cell, bool fixed);
 
+int sudoku_multi_load(Sudoku *s, int count, char *filepath);
+
 int sudoku_load(Sudoku *s, char* filepath);
 
 #endif
