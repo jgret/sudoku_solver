@@ -37,6 +37,16 @@ int main() {
 
         }
 
+        if (IsKeyPressed(KEY_S)) {
+            int ret = sovler_solve_sudoku(&sudoku);
+            if (ret == SUDOKU_VALID) {
+                printf("Sudoku solved!\n");
+            } else {
+                printf("Sudoku not solvable\n");
+            }
+            
+        }
+
         // user number input
         char ch = GetCharPressed();
         if (ch >= '1' && ch <= '9') {

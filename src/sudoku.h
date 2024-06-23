@@ -22,6 +22,8 @@ void sudoku_init(Sudoku *s);
 
 void sudoku_clear(Sudoku *s);
 
+void sudoku_set(Sudoku *s, Cell cell, uint8_t val);
+
 bool sudoku_is_cell_fixed(Sudoku *s, Cell cell);
 
 void sudoku_set_cell_fixed(Sudoku *s, Cell cell, bool fixed);

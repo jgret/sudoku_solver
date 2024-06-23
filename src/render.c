@@ -91,7 +91,7 @@ void render_sudoku(Sudoku *sudoku)
             Vector2 dim = MeasureTextEx(font, text, fontsize, 0);
 
             if (num >= 1 && num <= 9)
-                DrawTextEx(font, text, (Vector2){rows * cell_w + cell_w / 2 - dim.x / 2 + 1, cols * cell_h + cell_h / 2 - dim.y / 2 + 1}, fontsize, 0, BLACK);
+                DrawTextEx(font, text, (Vector2){cols * cell_w + cell_w / 2 - dim.x / 2 + 1, rows * cell_h + cell_h / 2 - dim.y / 2 + 1}, fontsize, 0, BLACK);
 
         }
     }    

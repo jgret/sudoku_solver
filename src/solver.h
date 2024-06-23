@@ -8,6 +8,7 @@ typedef enum {
     SUDOKU_ROW_ERROR = -1,
     SUDOKU_COL_ERROR = -2,
     SUDOKU_FIELD_ERROR = -3,
+    SUDOKU_NOT_SOLVABLE = -4,
 } SudokuErr;
 
 SudokuErr solver_check_cell(Sudoku *s, Cell cell);

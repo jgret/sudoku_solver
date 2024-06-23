@@ -26,6 +26,13 @@ void sudoku_clear(Sudoku *s)
     }
 }
 
+void sudoku_set(Sudoku *s, Cell cell, uint8_t val)
+{
+    if (cell_valid(cell))
+        if (val >= 0 && val <= 9)
+            s->nums[cell.row][cell.col] = val;
+}
+
 bool sudoku_is_cell_fixed(Sudoku *s, Cell cell)
 {
     return s->fixed[cell.row] & (1<<cell.col);
@@ -91,12 +98,12 @@ int load_oneline(Sudoku *s, char * filepath) {
         int idx = 0;
         
         while ((ch = getc(file)) != EOF) {
+            int row = idx / 9;
+            int col = idx % 9;
+
             int num = 0;
             if (ch >= '1' && ch <= '9')
                 num = ch - '0';
-
-            int row = idx / 9;
-            int col = idx % 9;
 
             s->nums[row][col] = num;
             sudoku_set_cell_fixed(s, (Cell){row, col}, num != 0);
@@ -106,14 +113,14 @@ int load_oneline(Sudoku *s, char * filepath) {
             if (idx >= 81)
                 break;
         }
-        
+
+        fclose(file);
         if (idx != 81)
             ret = -1;
-        
+
     } else {
         printf("File not found: %s\n", filepath);
     }
-    fclose(file);
 
     return ret;
 }
